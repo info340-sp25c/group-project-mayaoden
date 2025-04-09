@@ -1,3 +1,5 @@
 Group mumber
-Justin zhang
+Justin Zhang
 Yuhan Cao
+Connor Lam
+Maya Odenheim
