@@ -1,5 +1,5 @@
-Group mumber
-Justin Zhang
-Yuhan Cao
-Connor Lam
-Maya Odenheim
+**Group Members:**    
+Justin Zhang  
+Yuhan Cao  
+Connor Lam  
+Maya Odenheim  
