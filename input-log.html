@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="authors" content="Connor Lam, Justin Zhan, Yuhan Cao, Maya Odenheim">
-  <meta description="project" content="INFO 340">
+  <meta name="description" content="INFO 340 Project">
   <link rel="stylesheet" href="css/leaderboard.css">
   <title>Input Log | EcoTrack</title>
 </head>
@@ -16,58 +16,57 @@
 
   <main>
     <form>
-        <!-- Date -->
-        <label>Date:</label>
-        <input class="form-element" type="date">
-      
-        <!-- Type of Waste -->
-        <label>Type of Waste:</label>
-        <div class="form-element checkboxes">
-            <input type="checkbox"> Plastic<br>
-            <input type="checkbox"> Paper<br>
-            <input type="checkbox"> Food<br>
-            <input type="checkbox"> Glass<br>
-            <input type="checkbox"> Other<br>
-        </div>
-      
-        <!-- Amount -->
-        <label>Approximate Amount:</label>
-        <select class="form-element">
-          <option>-- Select One --</option>
-          <option>Small (fits in your hand)</option>
-          <option>Medium (fills a small bag)</option>
-          <option>Large (fills a bin or more)</option>
-        </select>  
+      <!-- Date -->
+      <label for="date">Date:</label>
+      <input class="form-element" type="date" id="date" name="date">
 
-        <!-- Waste Reduction Actions -->
-        <label>What did you do with it?</label><br>
-        <div class="form-element checkboxes">
-            <input type="checkbox"> Recycled<br>
-            <input type="checkbox"> Composted<br>
-            <input type="checkbox"> Reused<br>
-            <input type="checkbox"> Repurposed<br>
-            <input type="checkbox"> Other<br>
-        </div>
+      <!-- Type of Waste -->
+      <label for="waste-type">Type of Waste:</label>
+      <div id="waste-type" class="form-element checkboxes">
+        <input type="checkbox" id="plastic" aria-label="Plastic"> Plastic<br>
+        <input type="checkbox" id="paper" aria-label="Paper"> Paper<br>
+        <input type="checkbox" id="food" aria-label="Food"> Food<br>
+        <input type="checkbox" id="glass" aria-label="Glass"> Glass<br>
+        <input type="checkbox" id="other-waste" aria-label="Other"> Other<br>
+      </div>
 
-      
-        <!-- Item Details -->
-        <label>Items Involved + Actions Taken:</label>
-        <input class="form-element" type="text" placeholder="e.g. composted food scraps, reused glass jar">
-            
-        <!-- Notes -->
-        <label>Notes (optional):</label>
-        <textarea class="form-element" rows="4" placeholder="Any extra info you'd like to add..."></textarea>
-      
-        <!-- Upload -->
-        <label>Upload a photo (optional):</label>
-        <input class="form-element" type="file">
-      
-        <!-- Submit -->
-        <button type="submit">Submit Log Entry</button>
-      </form>      
+      <!-- Amount -->
+      <label for="amount">Approximate Amount:</label>
+      <select class="form-element" id="amount" name="amount">
+        <option value="">-- Select One --</option>
+        <option>Small (fits in your hand)</option>
+        <option>Medium (fills a small bag)</option>
+        <option>Large (fills a bin or more)</option>
+      </select>
+
+      <!-- Waste Reduction Actions -->
+      <label for="waste-action">What did you do with it?</label>
+      <div id="waste-action" class="form-element checkboxes">
+        <input type="checkbox" id="recycled" aria-label="Recycled"> Recycled<br>
+        <input type="checkbox" id="composted" aria-label="Composted"> Composted<br>
+        <input type="checkbox" id="reused" aria-label="Reused"> Reused<br>
+        <input type="checkbox" id="repurposed" aria-label="Repurposed"> Repurposed<br>
+        <input type="checkbox" id="other-action" aria-label="Other"> Other<br>
+      </div>
+
+      <!-- Item Details -->
+      <label for="items">Items Involved + Actions Taken:</label>
+      <input class="form-element" type="text" id="items" name="items" placeholder="e.g. composted food scraps, reused glass jar">
+
+      <!-- Notes -->
+      <label for="notes">Notes (optional):</label>
+      <textarea class="form-element" id="notes" name="notes" rows="4" placeholder="Any extra info you'd like to add..."></textarea>
+
+      <!-- Upload -->
+      <label for="upload">Upload a photo (optional):</label>
+      <input class="form-element" type="file" id="upload" name="upload">
+
+      <!-- Submit -->
+      <button type="submit">Submit Log Entry</button>
+    </form>
   </main>
 
-  <footer
+  <footer>
     <p>🌍 Keep reducing waste and climb the leaderboard!</p>
   </footer>
 </body>
