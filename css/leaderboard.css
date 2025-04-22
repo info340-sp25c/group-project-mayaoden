@@ -3,6 +3,7 @@ body {
     font-family: 'Segoe UI', sans-serif;
     background-color: white;
     color: black;
+    overflow-x: hidden;
 }
 
 header {
@@ -138,7 +139,8 @@ padding: 1rem;
 
 canvas {
     width: 100%;
-    height: auto 
+    height: auto;
+    max-width: 100%;
 }
 
 .stats-summary {
@@ -235,7 +237,7 @@ nav {
   }
   
   /* Mobile view */
-  @media (max-width: 700px) {
+@media (max-width: 700px) {
     .hamburger {
       display: inline;
     }
