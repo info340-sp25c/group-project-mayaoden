@@ -21,6 +21,8 @@ const pieChart = new Chart(pieCtx, {
         legend: {
         position: 'bottom'
         }
+    }, animation: {
+        duration: 5000 
     }
     }
 });
@@ -56,6 +58,8 @@ const lineChart = new Chart(lineCtx, {
             text: 'Days'
         }
         }
+    }, animation: {
+        duration: 5000
     }
     }
 });
