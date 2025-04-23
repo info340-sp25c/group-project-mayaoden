@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="authors" content="Connor Lam, Justin Zhan, Yuhan Cao, Maya Odenheim">
+  <meta name="description" content="INFO 340 Project">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/all.js" defer></script>
+  <script src="js/visualizations.js" defer></script>
+  <title>Visualizer | EcoTrack</title>
+</head>
+<body>
+  <nav>
+    <div class="navdiv">
+      <div class="name">
+        <img src="./img/Screenshot 2025-04-22 at 11.02.15 AM.png" alt="Waste icon" class="logo-icon">
+        EcoTrack
+      </div>
+      <ul id="navLinks">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./input-log.html">Input Waste</a></li>
+        <li><a href="./leaderboard.html">Leaderboard</a></li>
+        <li><a href="./visualizations.html">Progress</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+  <header>
+    <h1>🌱 Waste Reduction Progress</h1>
+    <p>Track your progress and compete with others weekly!</p>
+  </header>
+  <main>
+    <section class="stats-summary">
+      <h2>Your Waste Reduction Summary</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Points</h3>
+          <div class="stat-value">1,295</div>
+          <p>Rank: 3rd</p>
+        </div>
+        <div class="stat-card">
+          <h3>Recycled</h3>
+          <img src="img/recycle.png" alt="Recycle icon" class="img">
+          <div class="stat-value">42%</div>
+          <p>of total waste</p>
+        </div>
+        <div class="stat-card">
+          <h3>Composted</h3>
+          <img src="img/compost.png" alt="Compost icon" class="img">
+          <div class="stat-value">35%</div>
+          <p>of total waste</p>
+        </div>
+        <div class="stat-card">
+          <h3>Landfill</h3>
+          <img src="img/landfill.png" alt="Landfill icon" class="img">
+          <div class="stat-value">23%</div>
+          <p>of total waste</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="visualization-container">
+      <div class="chart-container">
+        <h2>Waste Composition</h2>
+        <canvas id="pieChart"></canvas>
+      </div>
+      
+      <div class="chart-container">
+        <h2>Points Progress</h2>
+        <canvas id="lineChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>🌍 Keep reducing waste and climb the leaderboard!</p>
+  </footer>
+</body>
+</html>
