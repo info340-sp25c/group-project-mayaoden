@@ -121,20 +121,20 @@ form button:hover {
 }
 
 .visualization-container {
-display: flex;
-flex-wrap: wrap;
-gap: 2rem;
-justify-content: space-between;
-margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    margin-bottom: 2rem;
 }
 
 .chart-container {
-flex: 1;
-min-width: 300px;
-background-color: white;
-border-radius: 10px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-padding: 1rem;
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
 }
 
 canvas {
@@ -144,31 +144,38 @@ canvas {
 }
 
 .stats-summary {
-background-color: white;
-border-radius: 10px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-padding: 1.5rem;
-margin-bottom: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .stats-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
 .stat-card {
-background-color: #E8F5E9;
-padding: 1rem;
-border-radius: 8px;
-text-align: center;
+    background-color: #E8F5E9;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
 }
 
 .stat-value {
-font-size: 2rem;
-font-weight: bold;
-color: #2E7D32;
-margin: 0.5rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2E7D32;
+    margin: 0.5rem 0;
+}
+
+.stat-card img {
+    height: 60px;
+    width: auto; 
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
 .logo-icon {
@@ -197,44 +204,44 @@ nav {
     width: 100%;
     height: auto;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+}
   
-  .navdiv {
+.navdiv {
     max-width: 1000px;
     margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1rem;
-  }
-  
-  nav ul {
+}
+
+nav ul {
     list-style: none;
     display: flex;
     gap: 1rem;
     margin: 0;
     padding: 0;
-  }
+}
   
-  nav ul li a {
+nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: 500;
-  }
+}
   
-  nav ul li a:hover {
+nav ul li a:hover {
     color: #004c3f;
     text-decoration: underline;
-  }
+}
   
-  .hamburger {
+.hamburger {
     display: none;
     font-size: 1.5rem;
     background: none;
     border: none;
     cursor: pointer;
     color: white;
-  }
+}
   
   /* Mobile view */
 @media (max-width: 700px) {
