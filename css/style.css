@@ -105,20 +105,39 @@ form input[type="checkbox"] {
   border-radius: 10px;
 }
 
-form button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 10px; 
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #45a045;
-}
+.form-buttons {
+    display: flex;
+    gap: 1rem;          
+    margin-top: 1rem;   
+  }
+  
+  .submit-button,
+  .cancel-button {
+    flex: 1;             
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a045;
+  }
+  
+  .cancel-button {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .cancel-button:hover {
+    background-color: #bbb;
+  }
 
 .visualization-container {
     display: flex;
@@ -179,7 +198,7 @@ canvas {
 }
 
 .logo-icon {
-    height: 50px;
+    height: 30px;
     width: auto;
     margin-right: 10px;
     vertical-align: middle;
@@ -310,4 +329,204 @@ nav ul li a:hover {
     .hamburger {
         display: none;
     }
+}
+
+.stats-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 600px) {
+    .stats-wrapper {
+      grid-template-columns: 1fr; 
+      row-gap: 2rem;
+    }
+  }
+
+.features {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.feature-button {
+    background-color: #4caf50;
+    color: white;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 1.3rem;
+    padding: 1.5rem 2rem;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.feature-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.feature-button span {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: #e0fbe2;
+}
+    
+.log-stats-summary,
+.week-calendar {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    text-align: center;
+    height: 100%;
+}    
+
+.log-stats-summary p {
+    margin: 0;
+}
+
+.week-calendar {
+    text-align: center;
+}
+
+.week-days {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+
+.week-calendar p {
+    margin: 0 0 0.2rem; 
+}
+
+.day {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.logged {
+    background-color: #4caf50;
+}
+
+.missed {
+    background-color: #cfd8dc;
+}
+
+.card-entry {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.card-left {
+    flex-grow: 1;
+    min-width: 60%;
+}
+
+.card-left p {
+    margin: 0.25rem 0;
+}
+
+.summary-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: white;
+    margin: 0.25em 0em;
+}
+
+.plastic { 
+    background-color: #42a5f5; 
+}
+
+.food { 
+    background-color: #8bc34a; 
+}
+.paper { 
+    background-color: #ffb74d; 
+}
+
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.card-actions button {
+    padding: 0.4rem 0.9rem;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.edit-btn { 
+    background-color: #ffb300; 
+}
+.edit-btn:hover { 
+    background-color: #ffa000; 
+}
+
+.delete-btn { 
+    background-color: #d32f2f;
+}
+.delete-btn:hover { 
+    background-color: #b71c1c; 
+}
+
+.new-entry-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 10px; 
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+  
+.new-entry-button:hover {
+    background-color: #45a045;
 }
