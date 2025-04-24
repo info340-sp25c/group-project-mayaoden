@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Waste Log History | EcoTrack">
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Waste Log History | EcoTrack</title>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="navdiv">
+      <div class="name">
+        <img src="./img/Screenshot 2025-04-22 at 11.02.15 AM.png" alt="Waste icon" class="logo-icon">
+        EcoTrack
+      </div>
+      <ul id="navLinks">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./log.html">Input Waste</a></li>
+        <li><a href="./leaderboard.html">Leaderboard</a></li>
+        <li><a href="./visualizations.html">Progress</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <h1>📋 Waste Log</h1>
+    <p>Review your past entries and keep making eco-friendly choices!</p>
+  </header>
+
+  <main>
+    <!-- Streak + Calendar -->
+    <div class="stats-wrapper">
+      <div class="stats-summary">
+        <p><strong>Total entries this week:</strong> 3 logs</p>
+        <p><strong>You're on a 1-day streak! 🌟</strong></p>
+      </div>
+      <div class="week-calendar">
+        <p><strong>🗓️ This Week</strong></p>
+        <div class="week-days">
+          <div class="day logged">S</div>
+          <div class="day logged">M</div>
+          <div class="day missed">T</div>
+          <div class="day logged">W</div>
+          <div class="day missed">T</div>
+          <div class="day missed">F</div>
+          <div class="day missed">S</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-entry">
+      <div class="card-left">
+        <p><strong>April 20, 2025</strong></p>
+        <p><span class="tag plastic">Plastic</span></p>
+        <p class="summary-line">Medium, recycled, threw away cans at recycling center</p>
+      </div>
+      <div class="card-actions">
+        <button class="edit-btn">✏️ Edit</button>
+        <button class="delete-btn" onclick="this.closest('.card-entry').remove()">🗑️ Delete</button>
+      </div>
+    </div>
+
+    <div class="card-entry">
+      <div class="card-left">
+        <p><strong>April 18, 2025</strong></p>
+        <p><span class="tag food">Food</span></p>
+        <p class="summary-line">Medium, composted, banana peels, coffee grounds</p>
+      </div>
+      <div class="card-actions">
+        <button class="edit-btn">✏️ Edit</button>
+        <button class="delete-btn" onclick="this.closest('.card-entry').remove()">🗑️ Delete</button>
+      </div>
+    </div>
+
+    <div class="card-entry">
+      <div class="card-left">
+        <p><strong>April 16, 2025</strong></p>
+        <p><span class="tag paper">Paper</span></p>
+        <p class="summary-line">Small, reused, turned old flyers into scrap paper</p>
+      </div>
+      <div class="card-actions">
+        <button class="edit-btn">✏️ Edit</button>
+        <button class="delete-btn" onclick="this.closest('.card-entry').remove()">🗑️ Delete</button>
+      </div>
+    </div>
+
+    <button class="new-entry-button" onclick="window.location.href='input-log.html'">
+        Start New Entry
+    </button>
+  </main>
+
+  <footer>
+    <p>🌍 Keep reducing waste and climb the leaderboard!</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
+  </script>
+</body>
+</html>
