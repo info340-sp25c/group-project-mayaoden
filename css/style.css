@@ -105,22 +105,39 @@ form input[type="checkbox"] {
   border-radius: 10px;
 }
 
-form button, 
-.new-entry-button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 10px; 
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-form button:hover, 
-.new-entry-button:hover {
-  background-color: #45a045;
-}
+.form-buttons {
+    display: flex;
+    gap: 1rem;          
+    margin-top: 1rem;   
+  }
+  
+  .submit-button,
+  .cancel-button {
+    flex: 1;             
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background-color: #45a045;
+  }
+  
+  .cancel-button {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .cancel-button:hover {
+    background-color: #bbb;
+  }
 
 .visualization-container {
     display: flex;
@@ -460,4 +477,20 @@ nav ul li a:hover {
 }
 .delete-btn:hover { 
     background-color: #b71c1c; 
+}
+
+.new-entry-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 10px; 
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+  
+.new-entry-button:hover {
+    background-color: #45a045;
 }

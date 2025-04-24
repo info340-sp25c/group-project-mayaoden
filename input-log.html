@@ -77,8 +77,15 @@
       <label for="upload">Upload a photo (optional):</label>
       <input class="form-element" type="file" id="upload" name="upload">
 
-      <!-- Submit -->
-      <button type="submit">Submit Log Entry</button>
+      <!-- Submit / Cancel -->
+      <div class="form-buttons">
+        <button type="button" class="submit-button" onclick="window.location.href='./log.html'">
+          Submit Log Entry
+        </button>
+        <button type="button" class="cancel-button" onclick="window.location.href='./log.html'">
+          Cancel
+        </button>
+      </div>
     </form>
   </main>
 
