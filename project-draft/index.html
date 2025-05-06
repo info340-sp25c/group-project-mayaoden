@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="authors" content="Connor Lam, Justin Zhan, Yuhan Cao, Maya Odenheim">
+  <meta name="description" content="INFO 340 Project">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/all.js" defer></script>
+  <link rel="icon" href="./img/ecotrack-icon.png" type="image/png">
+  <title>Input Log | EcoTrack</title>
+</head>
+<body>
+  <nav>
+    <div class="navdiv">
+      <div class="name">
+        <img src="./img/ecotrack-icon.png" alt="EcoTrack icon" class="logo-icon">
+        EcoTrack
+      </div>
+      <ul id="navLinks">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./log.html">Log Waste</a></li>
+        <li><a href="./leaderboard.html">Leaderboard</a></li>
+        <li><a href="./visualizations.html">Progress</a></li>
+        <li><a href="./login.html">Log In</a></li>
+      </ul>
+      <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+  <header>
+    <h1>🌱 Waste Reduction Home</h1>
+    <p>Log your waste to reduce your impact and gain points!</p>
+  </header>
+
+  <main >
+    <section class="features">
+      <button class="feature-button" onclick="location.href='log.html'">
+        🗑️ Log and Track Your Waste<br />
+        <span>Log your waste and see what you've previously logged.</span>
+      </button>
+
+      <button
+        class="feature-button"
+        onclick="location.href='visualizations.html'"
+      >
+        📊 Interactive Charts and Graphs<br />
+        <span>Track and explore your waste habits over time.</span>
+      </button>
+
+      <button
+        class="feature-button"
+        onclick="location.href='leaderboard.html'"
+      >
+        🏆 Community Leaderboard<br />
+        <span>See how your progress stacks up weekly!</span>
+      </button>
+    </section>
+  </main>
+
+  <footer>
+    <p>🌍 Keep reducing waste and climb the leaderboard!</p>
+  </footer>
+</body>
+</html>
