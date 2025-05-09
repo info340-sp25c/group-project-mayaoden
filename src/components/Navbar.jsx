@@ -12,7 +12,7 @@ function Navbar() {
     <nav>
       <div className="navdiv">
         <div className="name">
-          <img src="/img/ecotrack-icon.png" alt="EcoTrack icon" className="logo-icon" />
+          <img src="../public/ecotrack-icon.png" alt="EcoTrack icon" className="logo-icon" />
           EcoTrack
         </div>
         <ul id="navLinks" className={menuOpen ? "active" : ""}>
