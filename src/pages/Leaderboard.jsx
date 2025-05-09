@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import LeaderboardTable from '../components/LeaderboardTable';
 
 function Leaderboard() {
     return (
@@ -9,7 +9,9 @@ function Leaderboard() {
         </header>
 
         <main>
-
+            <section className="leaderboard">
+                <LeaderboardTable data={leaderboardData} />
+            </section>
         </main>
         </>
         
