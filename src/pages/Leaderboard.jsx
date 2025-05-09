@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import LeaderboardTable from '../components/LeaderboardTable';
 
-const [leaderboardData, setLeaderboardData] = useState([
-    { rank: 1, user: "Hannah", points: 1420, className: "gold" },
-    { rank: 2, user: "Justin", points: 1350, className: "silver" },
-    { rank: 3, user: "Conno", points: 1295, className: "bronze" },
-    { rank: 4, user: "Maya", points: 1200 },
-    { rank: 5, user: "Hello hello", points: 1175 },
-]);
-
 function Leaderboard() {
+    const [leaderboardData, setLeaderboardData] = useState([
+        { rank: 1, user: "Hannah", points: 1420, className: "gold" },
+        { rank: 2, user: "Justin", points: 1350, className: "silver" },
+        { rank: 3, user: "Conno", points: 1295, className: "bronze" },
+        { rank: 4, user: "Maya", points: 1200 },
+        { rank: 5, user: "Hello hello", points: 1175 },
+    ]);
+
     return (
         <>
         <header>
@@ -26,5 +26,6 @@ function Leaderboard() {
         
     )
 }
+
 
 export default Leaderboard;
