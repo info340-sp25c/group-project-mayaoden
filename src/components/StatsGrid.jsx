@@ -1,4 +1,3 @@
-import React from 'react';
 import StatCard from './StatCard';
 
 function StatsGrid({ totalPoints, rank, recycled, composted, landfill }) {

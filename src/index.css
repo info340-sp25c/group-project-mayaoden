@@ -531,3 +531,94 @@ nav ul li a:hover {
     background-color: #45a045;
 }
  
+/* Leaderboard specific styles */
+.controls {
+    margin-bottom: 1.5rem;
+}
+
+.sort-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sort-buttons span {
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+.sort-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sort-buttons button.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.leaderboard {
+    margin-bottom: 2rem;
+}
+
+.add-user h2 {
+    color: #2E7D32;
+    margin-bottom: 1rem;
+}
+
+.add-user button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75rem 1rem;  
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;  
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    align-self: center; 
+}
+
+.add-user div {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;  
+}
+
+.add-user input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.add-user input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.add-user button:hover {
+    background-color: #45a045;
+    transform: translateY(-2px);
+}
+
+.add-user button:active {
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .add-user div {
+        flex-direction: column;
+    }
+    
+    .sort-buttons {
+        flex-wrap: wrap;
+    }
+}

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function StatCard({ title, value, description, icon, iconAlt }) {
   return (
     <div className="stat-card">
