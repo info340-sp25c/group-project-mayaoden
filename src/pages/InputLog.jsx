@@ -1,8 +1,26 @@
+import CheckboxGroup from '../components/CheckboxGroup';
+
 function InputLog() {
     
     const handleRedirect = () => {
         window.location.href = './log.html';
     };
+
+    const wasteTypeOptions = [
+        { label: 'Plastic', value: 'plastic' },
+        { label: 'Paper', value: 'paper' },
+        { label: 'Food', value: 'food' },
+        { label: 'Glass', value: 'glass' },
+        { label: 'Other', value: 'other' },
+    ];
+
+    const wasteActionOptions = [
+        { label: 'Recycled', value: 'recycled' },
+        { label: 'Composted', value: 'composted' },
+        { label: 'Reused', value: 'reused' },
+        { label: 'Repurposed', value: 'repurposed' },
+        { label: 'Other', value: 'other' },
+    ];
 
     return (
         <>
@@ -17,14 +35,7 @@ function InputLog() {
                     <input className="form-element" type="date" id="date" name="date" />
 
                     {/* Type of Waste */}
-                    <label htmlFor="waste-type">Type of Waste:</label>
-                    <div id="waste-type" className="form-element checkboxes">
-                        <input type="checkbox" id="plastic" aria-label="Plastic" /> Plastic<br />
-                        <input type="checkbox" id="paper" aria-label="Paper" /> Paper<br />
-                        <input type="checkbox" id="food" aria-label="Food" /> Food<br />
-                        <input type="checkbox" id="glass" aria-label="Glass" /> Glass<br />
-                        <input type="checkbox" id="other-waste" aria-label="Other" /> Other<br />
-                    </div>
+                    <CheckboxGroup title="Type of Waste:" name="wasteType" options={wasteTypeOptions} />
 
                     {/* Amount */}
                     <label htmlFor="amount">Approximate Amount:</label>
@@ -36,14 +47,7 @@ function InputLog() {
                     </select>
 
                     {/* Waste Reduction Actions */}
-                    <label htmlFor="waste-action">What did you do with it?</label>
-                    <div id="waste-action" className="form-element checkboxes">
-                        <input type="checkbox" id="recycled" aria-label="Recycled" /> Recycled<br />
-                        <input type="checkbox" id="composted" aria-label="Composted" /> Composted<br />
-                        <input type="checkbox" id="reused" aria-label="Reused" /> Reused<br />
-                        <input type="checkbox" id="repurposed" aria-label="Repurposed" /> Repurposed<br />
-                        <input type="checkbox" id="other-action" aria-label="Other" /> Other<br />
-                    </div>
+                    <CheckboxGroup title="What did you do with it?" name="wasteAction" options={wasteActionOptions} />
 
                     {/* Item Details */}
                     <label htmlFor="items">Items Involved + Actions Taken:</label>
