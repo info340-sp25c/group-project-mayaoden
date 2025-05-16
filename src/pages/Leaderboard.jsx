@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import LeaderboardTable from '../components/LeaderboardTable';
+import PageHeader from '../components/PageHeader';
 
 function Leaderboard() {
     const [leaderboardData, setLeaderboardData] = useState([
@@ -71,10 +72,15 @@ function Leaderboard() {
     
     return (
         <>
-        <header>
+        {/* <header>
             <h1>🌱 Waste Reduction Leaderboard</h1>
             <p>Track your progress and compete with others weekly!</p>
-        </header>
+        </header> */}
+
+        <PageHeader 
+            title="🏆📊 Waste Reduction Leaderboard"
+            subtitle="Track your progress and compete with others weekly!"
+        />
         
         <main>
             <div className="controls">

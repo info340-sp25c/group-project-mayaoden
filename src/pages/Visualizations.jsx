@@ -20,10 +20,16 @@ function Visualizations() {
   
     return (
       <>
-        <header>
+        {/* <header>
           <h1>🌱 Waste Reduction Progress</h1>
           <p>Track your progress and compete with others weekly!</p>
-        </header>
+        </header> */}
+
+        <PageHeader 
+          title="🌱 Waste Reduction Progress"
+          subtitle="Track your progress and compete with others weekly!"
+        />
+        
         <main>
           <section className="stats-summary">
             <h2>Your Waste Reduction Summary</h2>

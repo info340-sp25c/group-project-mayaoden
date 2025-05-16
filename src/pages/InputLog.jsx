@@ -1,4 +1,5 @@
 import CheckboxGroup from '../components/CheckboxGroup';
+import PageHeader from '../components/PageHeader';
 
 function InputLog() {
     
@@ -24,10 +25,10 @@ function InputLog() {
 
     return (
         <>
-            <header>
-                <h1>🌱 Waste Reduction Input Log</h1>
-                <p>Log your waste to reduce your impact and gain points!</p>
-            </header>
+            <PageHeader 
+                title="🌱 Waste Reduction Input Log"
+                subtitle="Log your waste to reduce your impact and gain points!"
+            />
             <main>
                 <form>
                     {/* Date */}
