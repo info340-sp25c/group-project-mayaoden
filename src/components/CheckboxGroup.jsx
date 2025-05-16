@@ -2,12 +2,12 @@ import React from 'react';
 
 function CheckboxGroup({ title, name, options }) {
   return (
-    <div>
-      <label>{title}</label>
+    <div className="form-group">
+      <label className="section-label">{title}</label>
 
-      <div className="form-element checkboxes">
+      <div className="checkbox-group">
         {options.map((option) => (
-          <div key={option.value}>
+          <div className="checkbox-item" key={option.value}>
             <input
               type="checkbox"
               id={`${name}-${option.value}`}

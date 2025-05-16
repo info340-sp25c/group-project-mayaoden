@@ -80,9 +80,9 @@ form {
     overflow: hidden;
 }
 
-form label {
+/* form label {
     font-weight: bold;
-}
+} */
 
 .form-element
 {
@@ -94,15 +94,6 @@ form label {
   border: 1px solid #ccc;
   box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
-}
-
-form .checkboxes {
-    border: none;
-    padding: 0%;
-}
-
-form input[type="checkbox"] {
-  border-radius: 10px;
 }
 
 .form-buttons {
@@ -621,4 +612,29 @@ nav ul li a:hover {
     .sort-buttons {
         flex-wrap: wrap;
     }
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.section-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-group label {
+  font-weight: normal;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }

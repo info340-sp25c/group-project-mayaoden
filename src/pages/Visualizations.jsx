@@ -2,6 +2,7 @@ import { useState } from 'react';
 import StatsGrid from '../components/StatsGrid';
 import PieChartComponent from '../components/PieChartComponent';
 import LineChartComponent from '../components/LineChartComponent';
+import PageHeader from '../components/PageHeader';
 
 function Visualizations() {
     const [wasteData, setWasteData] = useState({

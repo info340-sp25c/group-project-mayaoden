@@ -1,5 +1,6 @@
 import CheckboxGroup from '../components/CheckboxGroup';
 import PageHeader from '../components/PageHeader';
+import DateInput from '../components/DateInput';
 
 function InputLog() {
     
@@ -32,8 +33,7 @@ function InputLog() {
             <main>
                 <form>
                     {/* Date */}
-                    <label htmlFor="date">Date:</label>
-                    <input className="form-element" type="date" id="date" name="date" />
+                    <DateInput />
 
                     {/* Type of Waste */}
                     <CheckboxGroup title="Type of Waste:" name="wasteType" options={wasteTypeOptions} />
