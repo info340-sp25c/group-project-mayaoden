@@ -372,7 +372,7 @@ nav ul li a:hover {
     color: #e0fbe2;
 }
     
-.log-stats-summary,
+.weekly-stats,
 .week-calendar {
     background-color: #fff;
     border-radius: 10px;
@@ -388,7 +388,7 @@ nav ul li a:hover {
     height: 100%;
 }    
 
-.log-stats-summary p {
+.weekly-stats p {
     margin: 0;
 }
 

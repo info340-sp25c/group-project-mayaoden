@@ -60,28 +60,13 @@ function InputLog() {
             />
             <main>
                 <form>
-                    {/* Date */}
                     <DateInput />
-
-                    {/* Type of Waste */}
                     <CheckboxGroup title="Type of Waste:" name="wasteType" options={wasteTypeOptions} />
-
-                    {/* Amount */}
                     <SelectDropdown label="Approximate Amount:" name="amount" options={amountOptions} />
-
-                    {/* Waste Reduction Actions */}
                     <CheckboxGroup title="What did you do with it?" name="wasteAction" options={wasteActionOptions} />
-
-                    {/* Item Details */}
                     <TextInput {...itemDetailsInput} />
-
-                    {/* Notes */}
                     <TextareaInput {...notesInput} />
-
-                    {/* Upload */}
                     <FileUploadInput {...uploadField} />
-
-                    {/* Submit / Cancel */}
                     <FormButtons onSubmit={handleRedirect} onCancel={handleRedirect} submitLabel="Submit Log Entry" />
                 </form>
             </main>
