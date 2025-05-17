@@ -1,11 +1,16 @@
 import CheckboxGroup from '../components/CheckboxGroup';
 import PageHeader from '../components/PageHeader';
 import DateInput from '../components/DateInput';
+import SelectDropdown from '../components/SelectDropdown';
+import TextInput from '../components/TextInput';
+import TextareaInput from '../components/TextareaInput';
+import FileUploadInput from '../components/FileUpload';
+import FormButtons from '../components/FormButtons';
 
 function InputLog() {
     
     const handleRedirect = () => {
-        window.location.href = './log.html';
+        window.location.href = '/log';
     };
 
     const wasteTypeOptions = [
@@ -24,6 +29,29 @@ function InputLog() {
         { label: 'Other', value: 'other' },
     ];
 
+    const amountOptions = [
+        { label: 'Small (fits in your hand)', value: 'small' },
+        { label: 'Medium (fills a small bag)', value: 'medium' },
+        { label: 'Large (fills a bin or more)', value: 'large' },
+    ];
+
+    const itemDetailsInput = {
+    label: "Items Involved + Actions Taken:",
+    id: "items",
+    placeholder: "e.g. composted food scraps, reused glass jar"
+    };
+
+    const notesInput = {
+    label: "Notes (optional):",
+    id: "notes",
+    placeholder: "Any extra info you'd like to add..."
+    };
+
+    const uploadField = {
+        label: "Upload a photo (optional):",
+        id: "upload"
+    };
+
     return (
         <>
             <PageHeader 
@@ -39,38 +67,22 @@ function InputLog() {
                     <CheckboxGroup title="Type of Waste:" name="wasteType" options={wasteTypeOptions} />
 
                     {/* Amount */}
-                    <label htmlFor="amount">Approximate Amount:</label>
-                    <select className="form-element" id="amount" name="amount">
-                        <option value="">-- Select One --</option>
-                        <option>Small (fits in your hand)</option>
-                        <option>Medium (fills a small bag)</option>
-                        <option>Large (fills a bin or more)</option>
-                    </select>
+                    <SelectDropdown label="Approximate Amount:" name="amount" options={amountOptions} />
 
                     {/* Waste Reduction Actions */}
                     <CheckboxGroup title="What did you do with it?" name="wasteAction" options={wasteActionOptions} />
 
                     {/* Item Details */}
-                    <label htmlFor="items">Items Involved + Actions Taken:</label>
-                    <input className="form-element" type="text" id="items" name="items" placeholder="e.g. composted food scraps, reused glass jar" />
+                    <TextInput {...itemDetailsInput} />
 
                     {/* Notes */}
-                    <label htmlFor="notes">Notes (optional):</label>
-                    <textarea className="form-element" id="notes" name="notes" rows="4" placeholder="Any extra info you'd like to add..." />
+                    <TextareaInput {...notesInput} />
 
                     {/* Upload */}
-                    <label htmlFor="upload">Upload a photo (optional):</label>
-                    <input className="form-element" type="file" id="upload" name="upload" />
+                    <FileUploadInput {...uploadField} />
 
                     {/* Submit / Cancel */}
-                    <div className="form-buttons">
-                        <button type="button" className="submit-button" onClick={handleRedirect}>
-                        Submit Log Entry
-                        </button>
-                        <button type="button" className="cancel-button" onClick={handleRedirect}>
-                        Cancel
-                        </button>
-                    </div>
+                    <FormButtons onSubmit={handleRedirect} onCancel={handleRedirect} submitLabel="Submit Log Entry" />
                 </form>
             </main>
         </>

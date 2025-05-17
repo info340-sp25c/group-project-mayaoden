@@ -87,7 +87,7 @@ form {
 .form-element
 {
   width: 100%;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
   margin-bottom: 2rem;
   padding: 0.5rem;
   border-radius: 10px; 
@@ -637,4 +637,14 @@ nav ul li a:hover {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+select
+{
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 10px; 
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }

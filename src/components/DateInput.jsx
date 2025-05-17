@@ -1,7 +1,7 @@
 function DateInput() {
   return (
     <>
-      <label htmlFor="date">Date:</label>
+      <label htmlFor="date" className="section-label">Date:</label>
       <input className="form-element" type="date" id="date" name="date" />
     </>
   );
