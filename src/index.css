@@ -80,29 +80,20 @@ form {
     overflow: hidden;
 }
 
-form label {
+/* form label {
     font-weight: bold;
-}
+} */
 
 .form-element
 {
   width: 100%;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
   margin-bottom: 2rem;
   padding: 0.5rem;
   border-radius: 10px; 
   border: 1px solid #ccc;
   box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
-}
-
-form .checkboxes {
-    border: none;
-    padding: 0%;
-}
-
-form input[type="checkbox"] {
-  border-radius: 10px;
 }
 
 .form-buttons {
@@ -381,7 +372,7 @@ nav ul li a:hover {
     color: #e0fbe2;
 }
     
-.log-stats-summary,
+.weekly-stats,
 .week-calendar {
     background-color: #fff;
     border-radius: 10px;
@@ -397,7 +388,7 @@ nav ul li a:hover {
     height: 100%;
 }    
 
-.log-stats-summary p {
+.weekly-stats p {
     margin: 0;
 }
 
@@ -621,4 +612,39 @@ nav ul li a:hover {
     .sort-buttons {
         flex-wrap: wrap;
     }
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.section-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-group label {
+  font-weight: normal;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+select
+{
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 10px; 
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
