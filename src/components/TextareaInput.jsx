@@ -1,4 +1,4 @@
-function TextareaInput({ label, id, placeholder, rows = 4 }) {
+function TextareaInput({ label, id, placeholder, rows = 4, defaultValue }) {
   return (
     <>
       <label htmlFor={id} className="section-label">{label}</label>
@@ -8,6 +8,7 @@ function TextareaInput({ label, id, placeholder, rows = 4 }) {
         name={id}
         rows={rows}
         placeholder={placeholder}
+        defaultValue={defaultValue}
       ></textarea>
     </>
   );
