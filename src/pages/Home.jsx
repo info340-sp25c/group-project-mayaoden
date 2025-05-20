@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import TouchCard from "../components/TouchCard";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <>
       <header>
@@ -18,19 +21,19 @@ function Home() {
             icon="🗑️"
             title="Log and Track Your Waste"
             description="Log your waste and see what you've previously logged."
-            onClick={() => (window.location.href = "log.html")}
+            onClick={() => navigate("/log")}
           />
           <TouchCard
             icon="📊"
             title="Interactive Charts and Graphs"
             description="Track and explore your waste habits over time."
-            onClick={() => (window.location.href = "visualizations.html")}
+            onClick={() => navigate("/visualizations")}
           />
           <TouchCard
             icon="🏆"
             title="Community Leaderboard"
             description="See how your progress stacks up weekly!"
-            onClick={() => (window.location.href = "leaderboard.html")}
+            onClick={() => navigate("/leaderboard")}
           />
         </section>
       </main>
