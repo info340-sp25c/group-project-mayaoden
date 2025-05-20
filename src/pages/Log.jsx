@@ -6,22 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import NewEntryButton from '../components/NewEntryButton';
 import { loadLogs, deleteLog } from '../db';
+import { isSameWeek, isSameDay, parseISO, subDays, format } from 'date-fns';
 
 function Log() {
     
-    const totalLogs = 3;
-    const streakDays = 1;
-
-    const daysThisWeek = [
-        { label: 'S', status: 'logged' },
-        { label: 'M', status: 'logged' },
-        { label: 'T', status: 'missed' },
-        { label: 'W', status: 'logged' },
-        { label: 'T', status: 'missed' },
-        { label: 'F', status: 'missed' },
-        { label: 'S', status: 'missed' }
-    ];
-
     const navigate = useNavigate();
     const [logEntries, setLogEntries] = useState([]);
 
@@ -39,19 +27,43 @@ function Log() {
         setLogEntries(loadLogs());
     };
 
-  return (
-    <>
-      <PageHeader 
-        title="📋 Waste Log"
-        subtitle="Review your past entries and keep making eco-friendly choices!"
-      />
-      <main>
-        <div className="stats-wrapper">
-          <WeeklyStats totalLogs={totalLogs} streakDays={streakDays} />
-          <WeekCalendar days={daysThisWeek} />
-        </div>
+    const today = new Date();
 
-        {logEntries.map((entry) => (
+    // Count logs in the current week
+    const thisWeekLogs = logEntries.filter(entry =>
+        isSameWeek(parseISO(entry.date), today, { weekStartsOn: 0 })
+    );
+    const totalLogs = thisWeekLogs.length;
+
+    const uniqueDates = Array.from(new Set(
+        logEntries.map(entry => format(parseISO(entry.date), 'yyyy-MM-dd'))
+    )).map(dateStr => parseISO(dateStr));
+
+    uniqueDates.sort((a, b) => b - a);
+
+    let streak = 0;
+    let current = today;
+
+    while (uniqueDates.some(date => isSameDay(date, current))) {
+        streak++;
+        current = subDays(current, 1);
+    }
+
+    const streakDays = streak;
+
+    return (
+        <>
+        <PageHeader 
+            title="📋 Waste Log"
+            subtitle="Review your past entries and keep making eco-friendly choices!"
+        />
+        <main>
+            <div className="stats-wrapper">
+            <WeeklyStats totalLogs={logEntries.length} streakDays={streakDays} />
+            <WeekCalendar logEntries={logEntries}/>
+            </div>
+
+            {logEntries.map((entry) => (
             <CardEntry
                 key={entry.id}
                 date={entry.date}
@@ -63,11 +75,12 @@ function Log() {
                 onEdit={() => handleEdit(entry)}
                 onDelete={() => handleDelete(entry.id)}
             />
-        ))}
-        <NewEntryButton />
-      </main>
-    </>
-  );
+
+            ))}
+            <NewEntryButton />
+        </main>
+        </>
+    );
 }
 
 export default Log;
