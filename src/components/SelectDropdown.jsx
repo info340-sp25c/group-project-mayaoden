@@ -1,10 +1,8 @@
-import React from 'react';
-
-function SelectDropdown({ label, name, options }) {
+function SelectDropdown({ label, name, options, defaultValue }) {
   return (
-    <div className="form-group">
+    <>
       <label htmlFor={name} className="section-label">{label}</label>
-        <select id={name} name={name}>
+        <select id={name} name={name} defaultValue={defaultValue}>
             <option value="">-- Select One --</option>
             {options.map((option) => (
             <option key={option.value || option.label} value={option.value}>
@@ -12,7 +10,7 @@ function SelectDropdown({ label, name, options }) {
             </option>
             ))}
         </select>
-    </div>
+    </>
   );
 }
 

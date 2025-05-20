@@ -3,12 +3,12 @@ import WeeklyStats from '../components/WeeklyStats';
 import WeekCalendar from '../components/WeekCalendar';
 import CardEntry from '../components/CardEntry';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NewEntryButton from '../components/NewEntryButton';
-
+import { loadLogs, deleteLog } from '../db';
 
 function Log() {
-
+    
     const totalLogs = 3;
     const streakDays = 1;
 
@@ -23,57 +23,51 @@ function Log() {
     ];
 
     const navigate = useNavigate();
+    const [logEntries, setLogEntries] = useState([]);
 
-    const [logEntries, setLogEntries] = useState([
-    {
-        date: 'April 20, 2025',
-        tagType: 'plastic',
-        tagLabel: 'Plastic',
-        summary: 'Medium, recycled, threw away cans at recycling center',
-    },
-    {
-        date: 'April 18, 2025',
-        tagType: 'food',
-        tagLabel: 'Food',
-        summary: 'Medium, composted, banana peels, coffee grounds',
-    },
-    {
-        date: 'April 16, 2025',
-        tagType: 'paper',
-        tagLabel: 'Paper',
-        summary: 'Small, reused, turned old flyers into scrap paper',
-    }
-    ]);
+    useEffect(() => {
+        const sortedLogs = loadLogs().sort((a, b) => new Date(b.date) - new Date(a.date));
+        setLogEntries(sortedLogs);
+    }, []);
 
-    const handleEdit = () => navigate('/log/input')
+    const handleEdit = (entry) => {
+        navigate('/log/input', { state: { entry } });
+    };
 
-    return (
-        <>
-            <PageHeader 
-                title="📋 Waste Log"
-                subtitle="Review your past entries and keep making eco-friendly choices!"
+    const handleDelete = (id) => {
+        deleteLog(id);
+        setLogEntries(loadLogs());
+    };
+
+  return (
+    <>
+      <PageHeader 
+        title="📋 Waste Log"
+        subtitle="Review your past entries and keep making eco-friendly choices!"
+      />
+      <main>
+        <div className="stats-wrapper">
+          <WeeklyStats totalLogs={totalLogs} streakDays={streakDays} />
+          <WeekCalendar days={daysThisWeek} />
+        </div>
+
+        {logEntries.map((entry) => (
+            <CardEntry
+                key={entry.id}
+                date={entry.date}
+                tagType={entry.tagType}
+                tagLabel={entry.tagLabel}
+                amount={entry.amount}
+                action={entry.action}
+                items={entry.items}
+                onEdit={() => handleEdit(entry)}
+                onDelete={() => handleDelete(entry.id)}
             />
-            <main>
-                <div class="stats-wrapper">
-                    <WeeklyStats totalLogs={totalLogs} streakDays={streakDays} />
-                    <WeekCalendar days={daysThisWeek} />
-                </div>
-
-                {logEntries.map((entry, index) => (
-                    <CardEntry
-                        key={index}
-                        {...entry}
-                        onEdit={handleEdit}
-                        onDelete={() => {
-                        setLogEntries(prevEntries => prevEntries.filter((_, i) => i !== index));
-                        }}                    
-                    />
-                ))}
-                <NewEntryButton />
-            </main>
-        </>
-        
-    )
+        ))}
+        <NewEntryButton />
+      </main>
+    </>
+  );
 }
 
 export default Log;
