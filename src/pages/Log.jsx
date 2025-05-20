@@ -63,20 +63,28 @@ function Log() {
             <WeekCalendar logEntries={logEntries}/>
             </div>
 
-            {logEntries.map((entry) => (
-            <CardEntry
-                key={entry.id}
-                date={entry.date}
-                tagType={entry.tagType}
-                tagLabel={entry.tagLabel}
-                amount={entry.amount}
-                action={entry.action}
-                items={entry.items}
-                onEdit={() => handleEdit(entry)}
-                onDelete={() => handleDelete(entry.id)}
-            />
-
-            ))}
+            {logEntries.length === 0 ? (
+                <div className="card-entry placeholder-entry">
+                    <div className="card-left">
+                        <p><strong>No entries yet...</strong></p>
+                        <p className="summary-line">Log your first waste activity to get started!</p>
+                    </div>
+                </div>
+            ) : (
+                logEntries.map((entry) => (
+                    <CardEntry
+                        key={entry.id}
+                        date={entry.date}
+                        tagType={entry.tagType}
+                        tagLabel={entry.tagLabel}
+                        amount={entry.amount}
+                        action={entry.action}
+                        items={entry.items}
+                        onEdit={() => handleEdit(entry)}
+                        onDelete={() => handleDelete(entry.id)}
+                    />
+                ))
+            )}
             <NewEntryButton />
         </main>
         </>

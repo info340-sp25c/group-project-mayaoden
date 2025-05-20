@@ -681,3 +681,14 @@ textarea.error {
 .no-margin {
     margin-bottom: 0;
 }
+
+.placeholder-entry {
+    background-color: #f9f9f9;
+    color: #353535;
+    font-style: italic;
+    border: 2px dashed #ccc;
+    justify-content: center;
+    text-align: center;
+    min-height: 20vh;
+
+}
