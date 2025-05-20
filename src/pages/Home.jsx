@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
 import TouchCard from "../components/TouchCard";
 
@@ -36,8 +34,6 @@ function Home() {
           />
         </section>
       </main>
-
-      <Footer />
     </>
   );
 }

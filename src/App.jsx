@@ -6,6 +6,7 @@ import Log from './pages/Log';
 import Leaderboard from './pages/Leaderboard';
 import Visualizations from './pages/Visualizations';
 import InputLog from './pages/InputLog';
+import LogIn from './pages/LogIn';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/visualizations" element={<Visualizations />} />
         <Route path="/log/input" element={<InputLog />} />
+        <Route path="/login" element={<LogIn />} />
       </Routes>
       <Footer />
     </BrowserRouter>

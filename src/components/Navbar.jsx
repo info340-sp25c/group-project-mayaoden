@@ -12,7 +12,7 @@ function Navbar() {
     <nav>
       <div className="navdiv">
         <div className="name">
-          <img src="/ecotrack-icon.png" alt="EcoTrack icon" className="logo-icon" />
+        <Link to="/"><img src="/ecotrack-icon.png" alt="EcoTrack icon" className="logo-icon" /></Link>
           EcoTrack
         </div>
         <ul id="navLinks" className={menuOpen ? "active" : ""}>
@@ -20,6 +20,7 @@ function Navbar() {
           <li><Link to="/log">Log Waste</Link></li>
           <li><Link to="/leaderboard">Leaderboard</Link></li>
           <li><Link to="/visualizations">Progress</Link></li>
+          <li><Link to="/login">Log In</Link></li>
         </ul>
         <button 
           className="hamburger" 
