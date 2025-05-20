@@ -7,6 +7,7 @@ import Leaderboard from './pages/Leaderboard';
 import Visualizations from './pages/Visualizations';
 import InputLog from './pages/InputLog';
 import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/visualizations" element={<Visualizations />} />
         <Route path="/log/input" element={<InputLog />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       <Footer />
     </BrowserRouter>

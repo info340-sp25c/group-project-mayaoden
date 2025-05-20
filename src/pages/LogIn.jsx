@@ -1,6 +1,7 @@
 import React from 'react';
 import '../index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
 
 function LogIn() {
   return (
@@ -24,7 +25,7 @@ function LogIn() {
             <button type="submit" className="btn btn-success w-100">Log In</button>
           </form>
           <p className="mt-3 text-center small">
-            Don't have an account? <a href="./signup.html">Sign up</a>
+            Don't have an account? <Link to="/signup">Sign up</Link>
           </p>
         </div>
       </main>
