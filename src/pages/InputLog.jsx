@@ -173,7 +173,7 @@ function InputLog() {
                         defaultValue={entry.notes || ''}
                     />
 
-                    <FileUploadInput {...uploadField} />
+                    {/* <FileUploadInput {...uploadField} /> */}
 
                     <FormButtons
                         onSubmit={handleSubmit}
