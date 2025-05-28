@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import StatsGrid from '../components/StatsGrid';
 import PieChartComponent from '../components/PieChartComponent';
 import LineChartComponent from '../components/LineChartComponent';
@@ -6,6 +7,7 @@ import PageHeader from '../components/PageHeader';
 import { getAnalyticsData } from '../firebase/Database';
 
 function Visualizations() {
+    const { currentUser, userData } = useAuth();
     const [wasteData, setWasteData] = useState({
         totalPoints: 0,
         rank: 'Unranked',
@@ -24,12 +26,16 @@ function Visualizations() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        loadAnalyticsData();
-    }, []);
+        if (currentUser) {
+            loadAnalyticsData();
+        } else {
+            setIsLoading(false);
+        }
+    }, [currentUser]);
 
     const loadAnalyticsData = async () => {
         try {
-            const data = await getAnalyticsData('default'); // You can add user authentication later
+            const data = await getAnalyticsData(currentUser.uid);
             setWasteData(data);
         } catch (error) {
             console.error('Error loading analytics data:', error);
@@ -54,6 +60,22 @@ function Visualizations() {
         );
     }
 
+    if (!currentUser) {
+        return (
+            <>
+                <PageHeader 
+                    title="🌱 Waste Reduction Progress"
+                    subtitle="Track your progress and compete with others weekly!"
+                />
+                <main>
+                    <div style={{ textAlign: 'center', padding: '2rem' }}>
+                        <p>Please log in to view your analytics.</p>
+                    </div>
+                </main>
+            </>
+        );
+    }
+
     // Check if user has any data
     const hasData = wasteData.totalPoints > 0 || 
                    Object.values(wasteData.wasteComposition).some(val => val > 0);
@@ -62,7 +84,7 @@ function Visualizations() {
         <>
             <PageHeader 
                 title="🌱 Waste Reduction Progress"
-                subtitle="Track your progress and compete with others weekly!"
+                subtitle={`Welcome back, ${currentUser.displayName || userData?.name || 'Anonymous'}!`}
             />
             
             <main>

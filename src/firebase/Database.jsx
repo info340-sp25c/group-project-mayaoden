@@ -1,6 +1,6 @@
-// firebase/database.js
+// firebase/Database.js - Updated with authentication
 import { ref, push, set, get, remove, onValue, off } from 'firebase/database';
-import { db } from '../index.jsx'; 
+import { db } from '../index.jsx';
 
 // Points multipliers for different actions
 const POINTS_MULTIPLIERS = {
@@ -39,6 +39,10 @@ export function calculatePoints(entry) {
 // Save a new log entry
 export async function saveLog(entry) {
   try {
+    if (!entry.userId) {
+      throw new Error('User ID is required');
+    }
+
     const points = calculatePoints(entry);
     const entryWithPoints = {
       ...entry,
@@ -51,7 +55,7 @@ export async function saveLog(entry) {
     await set(newLogRef, entryWithPoints);
     
     // Update user points
-    await updateUserPoints(entry.userId || 'default', points);
+    await updateUserPoints(entry.userId, points);
     
     return { success: true, id: newLogRef.key };
   } catch (error) {
@@ -63,6 +67,10 @@ export async function saveLog(entry) {
 // Update an existing log entry
 export async function updateLog(logId, entry) {
   try {
+    if (!entry.userId) {
+      throw new Error('User ID is required');
+    }
+
     const points = calculatePoints(entry);
     const entryWithPoints = {
       ...entry,
@@ -79,7 +87,7 @@ export async function updateLog(logId, entry) {
     
     // Update user points with the difference
     const pointsDifference = points - oldPoints;
-    await updateUserPoints(entry.userId || 'default', pointsDifference);
+    await updateUserPoints(entry.userId, pointsDifference);
     
     return { success: true };
   } catch (error) {
@@ -95,7 +103,7 @@ export async function deleteLog(logId) {
     const entrySnapshot = await get(ref(db, `logs/${logId}`));
     if (entrySnapshot.exists()) {
       const entry = entrySnapshot.val();
-      await updateUserPoints(entry.userId || 'default', -entry.points);
+      await updateUserPoints(entry.userId, -entry.points);
     }
     
     const logRef = ref(db, `logs/${logId}`);
@@ -108,9 +116,13 @@ export async function deleteLog(logId) {
   }
 }
 
-// Load all logs
-export async function loadLogs(userId = 'default') {
+// Load all logs for a specific user
+export async function loadLogs(userId) {
   try {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+
     const logsRef = ref(db, 'logs');
     const snapshot = await get(logsRef);
     
@@ -118,7 +130,7 @@ export async function loadLogs(userId = 'default') {
       const logs = [];
       snapshot.forEach((childSnapshot) => {
         const log = childSnapshot.val();
-        if (!userId || log.userId === userId) {
+        if (log.userId === userId) {
           logs.push({
             id: childSnapshot.key,
             ...log
@@ -134,8 +146,13 @@ export async function loadLogs(userId = 'default') {
   }
 }
 
-// Listen to logs changes in real-time
-export function listenToLogs(callback, userId = 'default') {
+// Listen to logs changes in real-time for a specific user
+export function listenToLogs(callback, userId) {
+  if (!userId) {
+    callback([]);
+    return () => {};
+  }
+
   const logsRef = ref(db, 'logs');
   
   const unsubscribe = onValue(logsRef, (snapshot) => {
@@ -143,7 +160,7 @@ export function listenToLogs(callback, userId = 'default') {
       const logs = [];
       snapshot.forEach((childSnapshot) => {
         const log = childSnapshot.val();
-        if (!userId || log.userId === userId) {
+        if (log.userId === userId) {
           logs.push({
             id: childSnapshot.key,
             ...log
@@ -162,22 +179,25 @@ export function listenToLogs(callback, userId = 'default') {
 // Update user points
 async function updateUserPoints(userId, pointsToAdd) {
   try {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+
     const userRef = ref(db, `users/${userId}`);
     const userSnapshot = await get(userRef);
     
     let currentPoints = 0;
-    let userName = 'Anonymous';
+    let userData = {};
     
     if (userSnapshot.exists()) {
-      const userData = userSnapshot.val();
+      userData = userSnapshot.val();
       currentPoints = userData.points || 0;
-      userName = userData.name || 'Anonymous';
     }
     
     const newPoints = Math.max(0, currentPoints + pointsToAdd);
     
     await set(userRef, {
-      name: userName,
+      ...userData,
       points: newPoints,
       lastUpdated: Date.now()
     });
@@ -190,8 +210,12 @@ async function updateUserPoints(userId, pointsToAdd) {
 }
 
 // Get user data
-export async function getUserData(userId = 'default') {
+export async function getUserData(userId) {
   try {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+
     const userRef = ref(db, `users/${userId}`);
     const snapshot = await get(userRef);
     
@@ -214,6 +238,35 @@ export async function getUserData(userId = 'default') {
   }
 }
 
+// Update user profile
+export async function updateUserProfile(userId, profileData) {
+  try {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+
+    const userRef = ref(db, `users/${userId}`);
+    const userSnapshot = await get(userRef);
+    
+    let existingData = {};
+    if (userSnapshot.exists()) {
+      existingData = userSnapshot.val();
+    }
+    
+    const updatedData = {
+      ...existingData,
+      ...profileData,
+      lastUpdated: Date.now()
+    };
+    
+    await set(userRef, updatedData);
+    return updatedData;
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+}
+
 // Get leaderboard data
 export async function getLeaderboardData() {
   try {
@@ -228,7 +281,8 @@ export async function getLeaderboardData() {
           id: childSnapshot.key,
           user: user.name || 'Anonymous',
           points: user.points || 0,
-          lastUpdated: user.lastUpdated
+          lastUpdated: user.lastUpdated,
+          photoURL: user.photoURL
         });
       });
       
@@ -263,7 +317,8 @@ export function listenToLeaderboard(callback) {
           id: childSnapshot.key,
           user: user.name || 'Anonymous',
           points: user.points || 0,
-          lastUpdated: user.lastUpdated
+          lastUpdated: user.lastUpdated,
+          photoURL: user.photoURL
         });
       });
       
@@ -284,26 +339,13 @@ export function listenToLeaderboard(callback) {
   return unsubscribe;
 }
 
-// Add a new user to leaderboard
-export async function addUserToLeaderboard(userName) {
-  try {
-    const usersRef = ref(db, 'users');
-    const newUserRef = push(usersRef);
-    await set(newUserRef, {
-      name: userName,
-      points: 0,
-      lastUpdated: Date.now()
-    });
-    return { success: true, id: newUserRef.key };
-  } catch (error) {
-    console.error('Error adding user:', error);
-    return { success: false, error: error.message };
-  }
-}
-
 // Get analytics data for visualizations
-export async function getAnalyticsData(userId = 'default') {
+export async function getAnalyticsData(userId) {
   try {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+
     const logs = await loadLogs(userId);
     const userData = await getUserData(userId);
     
@@ -368,4 +410,4 @@ export async function getAnalyticsData(userId = 'default') {
       pointsProgress: { labels: [], data: [] }
     };
   }
-} 
+}

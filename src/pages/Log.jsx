@@ -1,25 +1,33 @@
+// pages/Log.js - Updated to use authentication with your existing components
 import PageHeader from '../components/PageHeader'; 
 import WeeklyStats from '../components/WeeklyStats'; 
 import WeekCalendar from '../components/WeekCalendar'; 
 import CardEntry from '../components/CardEntry'; 
+import NewEntryButton from '../components/NewEntryButton';
 import { useNavigate } from 'react-router-dom'; 
 import { useState, useEffect } from 'react'; 
-import NewEntryButton from '../components/NewEntryButton'; 
 import { isSameWeek, isSameDay, parseISO, subDays, format } from 'date-fns';
 import { listenToLogs, deleteLog } from '../firebase/Database';
+import { useAuth } from '../contexts/AuthContext';
 
 function Log() {
     const navigate = useNavigate();
+    const { currentUser } = useAuth();
     const [logEntries, setLogEntries] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isDeleting, setIsDeleting] = useState({});
 
     useEffect(() => {
-        // Set up real-time listener for log entries
+        if (!currentUser) {
+            setIsLoading(false);
+            return;
+        }
+
+        // Set up real-time listener for log entries with user authentication
         const unsubscribe = listenToLogs((logs) => {
             setLogEntries(logs);
             setIsLoading(false);
-        }, 'default'); // You can add user authentication later
+        }, currentUser.uid); // Use actual user ID instead of 'default'
 
         // Cleanup listener on component unmount
         return () => {
@@ -27,13 +35,18 @@ function Log() {
                 unsubscribe();
             }
         };
-    }, []);
+    }, [currentUser]);
 
     const handleEdit = (entry) => {
         navigate('/log/input', { state: { entry } });
     };
 
     const handleDelete = async (id) => {
+        if (!currentUser) {
+            alert('You must be logged in to delete entries');
+            return;
+        }
+
         if (!window.confirm('Are you sure you want to delete this entry?')) {
             return;
         }
@@ -52,6 +65,30 @@ function Log() {
             setIsDeleting(prev => ({ ...prev, [id]: false }));
         }
     };
+
+    // Show authentication required message if not logged in
+    if (!currentUser) {
+        return (
+            <>
+                <PageHeader 
+                    title="📋 Waste Log"
+                    subtitle="Please log in to access your waste tracking data"
+                />
+                <main>
+                    <div style={{ textAlign: 'center', padding: '2rem' }}>
+                        <h3>Authentication Required</h3>
+                        <p>You must be logged in to view and manage your waste log entries.</p>
+                        <button 
+                            className="btn btn-primary"
+                            onClick={() => navigate('/login')}
+                        >
+                            Go to Login
+                        </button>
+                    </div>
+                </main>
+            </>
+        );
+    }
 
     const today = new Date();
 
@@ -87,7 +124,10 @@ function Log() {
                 />
                 <main>
                     <div style={{ textAlign: 'center', padding: '2rem' }}>
-                        <p>Loading your log entries...</p>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <p className="mt-2">Loading your log entries...</p>
                     </div>
                 </main>
             </>

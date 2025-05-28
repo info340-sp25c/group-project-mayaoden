@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import CheckboxGroup from '../components/CheckboxGroup';
 import PageHeader from '../components/PageHeader';
 import DateInput from '../components/DateInput';
@@ -12,6 +13,7 @@ import FormButtons from '../components/FormButtons';
 import { saveLog, updateLog } from '../firebase/Database';
 
 function InputLog() {
+    const { currentUser } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const entry = location.state?.entry || {};
@@ -92,12 +94,17 @@ function InputLog() {
             return;
         }
 
+        if (!currentUser) {
+            alert('You must be logged in to submit entries.');
+            return;
+        }
+
         setErrors({});
         setIsSubmitting(true);
 
         const newEntry = {
             id: entry.id || uuidv4(),
-            userId: 'default', // You can add user authentication later
+            userId: currentUser.uid,
             date,
             tagType,
             tagLabel: tagType.map(t => t.charAt(0).toUpperCase() + t.slice(1)),

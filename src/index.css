@@ -4,6 +4,19 @@ body {
     background-color: white;
     color: black;
     overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 header {

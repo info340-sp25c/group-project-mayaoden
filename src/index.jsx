@@ -1,3 +1,4 @@
+// index.jsx - Updated with Firebase Auth
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -6,6 +7,7 @@ import { StrictMode } from 'react'
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCu-s9BnGxNcMZd5F2DXecJbL4MTQ886nE",
@@ -20,10 +22,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const db = getDatabase(app);
+const auth = getAuth(app);
 
-export { db };
+export { db, auth };
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

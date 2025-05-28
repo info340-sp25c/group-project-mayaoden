@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import LeaderboardTable from '../components/LeaderboardTable';
 import PageHeader from '../components/PageHeader';
-import { listenToLeaderboard, addUserToLeaderboard } from '../firebase/Database';
+import { listenToLeaderboard, updateUserProfile } from '../firebase/Database';
 
 function Leaderboard() {
+    const { currentUser, userData } = useAuth();
     const [leaderboardData, setLeaderboardData] = useState([]);
-    const [newUser, setNewUser] = useState("");
-    const [newPoints, setNewPoints] = useState("");
     const [sortOrder, setSortOrder] = useState("points");
     const [isLoading, setIsLoading] = useState(true);
-    const [isAddingUser, setIsAddingUser] = useState(false);
     
     useEffect(() => {
         // Set up real-time listener for leaderboard data
@@ -25,6 +24,22 @@ function Leaderboard() {
             }
         };
     }, []);
+
+    // Ensure current user is in the leaderboard
+    useEffect(() => {
+        if (currentUser && userData && leaderboardData.length > 0) {
+            const userInLeaderboard = leaderboardData.find(user => user.id === currentUser.uid);
+            if (!userInLeaderboard) {
+                // Add current user to database if not present
+                updateUserProfile(currentUser.uid, {
+                    name: currentUser.displayName || userData.name || 'Anonymous',
+                    email: currentUser.email,
+                    points: userData.points || 0,
+                    photoURL: currentUser.photoURL || userData.photoURL
+                });
+            }
+        }
+    }, [currentUser, userData, leaderboardData]);
     
     const handleSort = (sortBy) => {
         let sortedData = [...leaderboardData];
@@ -46,43 +61,6 @@ function Leaderboard() {
         
         setLeaderboardData(sortedData);
         setSortOrder(sortBy);
-    };
-    
-    const handleAddUser = async (e) => {
-        if (e) e.preventDefault();
-        
-        if (!newUser.trim()) {
-            alert("Please enter a valid username");
-            return;
-        }
-
-        // Check if user already exists
-        const existingUser = leaderboardData.find(user => 
-            user.user.toLowerCase() === newUser.trim().toLowerCase()
-        );
-        
-        if (existingUser) {
-            alert("User already exists in the leaderboard");
-            return;
-        }
-        
-        setIsAddingUser(true);
-        
-        try {
-            const result = await addUserToLeaderboard(newUser.trim());
-            
-            if (result.success) {
-                setNewUser("");
-                setNewPoints("");
-            } else {
-                alert("Error adding user. Please try again.");
-            }
-        } catch (error) {
-            console.error('Error adding user:', error);
-            alert("Error adding user. Please try again.");
-        } finally {
-            setIsAddingUser(false);
-        }
     };
     
     if (isLoading) {
@@ -130,34 +108,40 @@ function Leaderboard() {
                 <section className="leaderboard">
                     {leaderboardData.length === 0 ? (
                         <div style={{ textAlign: 'center', padding: '2rem' }}>
-                            <p>No participants yet. Be the first to join!</p>
+                            <p>No participants yet. Start logging waste activities to join the leaderboard!</p>
                         </div>
                     ) : (
-                        <LeaderboardTable data={leaderboardData} />
+                        <LeaderboardTable 
+                            data={leaderboardData} 
+                            currentUserId={currentUser?.uid}
+                        />
                     )}
                 </section>
                 
-                <section className="add-user">
-                    <h2>Add New Participant</h2>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            value={newUser}
-                            onChange={(e) => setNewUser(e.target.value)}
-                            disabled={isAddingUser}
-                        />
+                <section style={{ marginTop: '2rem' }}>
+                    <div style={{
+                        background: '#e7f3ff',
+                        padding: '1.5rem',
+                        borderRadius: '8px',
+                        border: '1px solid #b3d9ff'
+                    }}>
+                        <h3 style={{ marginTop: 0, color: '#0066cc' }}>How to Join the Leaderboard</h3>
+                        <p>Start logging your waste reduction activities to automatically appear on the leaderboard and earn points!</p>
                         <button 
-                            onClick={handleAddUser}
-                            className="submit-button"
-                            disabled={isAddingUser || !newUser.trim()}
+                            onClick={() => window.location.href = '/log/input'}
+                            style={{
+                                background: '#28a745',
+                                color: 'white',
+                                border: 'none',
+                                padding: '0.75rem 1.5rem',
+                                borderRadius: '6px',
+                                fontSize: '1rem',
+                                cursor: 'pointer'
+                            }}
                         >
-                            {isAddingUser ? "Adding..." : "Add User"}
+                            Log Your Entry
                         </button>
                     </div>
-                    <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>
-                        Note: Points are automatically calculated based on waste log entries.
-                    </p>
                 </section>
             </main>
         </>
