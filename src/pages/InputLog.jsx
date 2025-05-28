@@ -1,5 +1,4 @@
-import { useLocation } from 'react-router-dom';
-import { saveLog, updateLog } from '../db';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -10,13 +9,16 @@ import TextInput from '../components/TextInput';
 import TextareaInput from '../components/TextareaInput';
 import FileUploadInput from '../components/FileUpload';
 import FormButtons from '../components/FormButtons';
+import { saveLog, updateLog } from '../firebase/Database';
 
 function InputLog() {
     const location = useLocation();
+    const navigate = useNavigate();
     const entry = location.state?.entry || {};
     const isEdit = Boolean(entry.id);
 
     const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const wasteTypeOptions = [
         { label: 'Plastic', value: 'plastic' },
@@ -63,8 +65,11 @@ function InputLog() {
         return date.toISOString().split('T')[0];
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+        
+        if (isSubmitting) return;
+        
         const form = e.target.form || e.target.closest('form');
         const formData = new FormData(form);
 
@@ -88,9 +93,11 @@ function InputLog() {
         }
 
         setErrors({});
+        setIsSubmitting(true);
 
         const newEntry = {
             id: entry.id || uuidv4(),
+            userId: 'default', // You can add user authentication later
             date,
             tagType,
             tagLabel: tagType.map(t => t.charAt(0).toUpperCase() + t.slice(1)),
@@ -101,13 +108,30 @@ function InputLog() {
             timestamp: Date.now()
         };
 
-        if (isEdit) {
-            updateLog(entry.id, newEntry);
-        } else {
-            saveLog(newEntry);
-        }
+        try {
+            let result;
+            if (isEdit) {
+                result = await updateLog(entry.id, newEntry);
+            } else {
+                result = await saveLog(newEntry);
+            }
 
-        window.location.href = '/log';
+            if (result.success) {
+                navigate('/log');
+            } else {
+                console.error('Error saving entry:', result.error);
+                alert('Error saving entry. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('Error saving entry. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
+    function handleCancel() {
+        navigate('/log');
     }
 
     return (
@@ -177,8 +201,9 @@ function InputLog() {
 
                     <FormButtons
                         onSubmit={handleSubmit}
-                        onCancel={() => window.location.href = "/log"}
-                        submitLabel="Submit Log Entry"
+                        onCancel={handleCancel}
+                        submitLabel={isSubmitting ? "Saving..." : "Submit Log Entry"}
+                        disabled={isSubmitting}
                     />
                 </form>
             </main>
