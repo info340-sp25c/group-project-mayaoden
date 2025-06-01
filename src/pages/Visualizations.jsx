@@ -97,7 +97,7 @@ function Visualizations() {
                         composted={wasteData.wasteComposition.composted}
                         reused={wasteData.wasteComposition.reused}
                         repurposed={wasteData.wasteComposition.repurposed}
-                        other={wasteData.wasteComposition.other}
+                        landfill={wasteData.wasteComposition.other} 
                     />
                 </section>
 

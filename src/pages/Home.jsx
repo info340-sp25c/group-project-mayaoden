@@ -1,5 +1,4 @@
-// pages/Home.js - Updated with authentication
-import React from "react";
+// pages/Home.js - Updated with better user info layout
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import PageHeader from "../components/PageHeader";
@@ -20,44 +19,57 @@ function Home() {
     <>
       <header>
         <PageHeader
-          title={`🌱 Welcome ${currentUser?.displayName || userData?.name || 'User'}!`}
+          title="🌱 Welcome to EcoTracker!"
           subtitle="Log your waste to reduce your impact and gain points!"
         />
-        
-        {/* User info and logout section */}
-        <div className="container mt-3">
-          <div className="row justify-content-between align-items-center">
-            <div className="col-auto">
-              <div className="d-flex align-items-center">
-                {currentUser?.photoURL && (
-                  <img 
-                    src={currentUser.photoURL} 
-                    alt="Profile" 
-                    className="rounded-circle me-2"
-                    style={{ width: '40px', height: '40px' }}
-                  />
-                )}
-                <div>
-                  <div className="fw-bold">{currentUser?.displayName || userData?.name}</div>
-                  <div className="text-muted small">
-                    Points: {userData?.points || 0} 🏆
+      </header>
+
+      <main>
+        {/* User Profile Card */}
+        <div className="container my-4">
+          <div className="card shadow-sm border-0 bg-gradient" 
+               style={{ 
+                 background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)',
+                 color: 'white'
+               }}>
+            <div className="card-body py-4">
+              <div className="row align-items-center">
+                <div className="col-auto">
+                  {currentUser?.photoURL ? (
+                    <img
+                      src={currentUser.photoURL}
+                      alt="Profile"
+                      className="rounded-circle border border-white border-3"
+                      style={{ width: '80px', height: '80px' }}
+                    />
+                  ) : (
+                    <div 
+                      className="rounded-circle bg-white text-success d-flex align-items-center justify-content-center border border-white border-3"
+                      style={{ width: '80px', height: '80px', fontSize: '2rem' }}
+                    >
+                      👤
+                    </div>
+                  )}
+                </div>
+                <div className="col">
+                  <h3 className="mb-1 fw-bold text-dark">
+                    Hello, {currentUser?.displayName || userData?.name || 'User'}!
+                  </h3>
+                  <p className="mb-2 text-dark">
+                    Keep up the great work making a difference! 🌍
+                  </p>
+                  <div className="d-flex align-items-center">
+                    <span className="badge bg-light text-success px-3 py-2 fs-6 fw-bold">
+                      🏆 {userData?.points || 0} Points
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-auto">
-              <button 
-                onClick={handleLogout}
-                className="btn btn-outline-secondary btn-sm"
-              >
-                Sign Out
-              </button>
-            </div>
           </div>
         </div>
-      </header>
 
-      <main>
+        {/* Features Section */}
         <section className="features">
           <TouchCard
             icon="🗑️"
