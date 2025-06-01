@@ -33,9 +33,7 @@ function InputLog() {
     const wasteActionOptions = [
         { label: 'Recycled', value: 'recycled' },
         { label: 'Composted', value: 'composted' },
-        { label: 'Reused', value: 'reused' },
-        { label: 'Repurposed', value: 'repurposed' },
-        { label: 'Other', value: 'other' },
+        { label: 'Landfill', value: 'landfill' }
     ];
 
     const amountOptions = [
@@ -78,7 +76,7 @@ function InputLog() {
         const date = formData.get("date");
         const tagType = formData.getAll("wasteType");
         const amount = formData.get("amount");
-        const action = formData.getAll("wasteAction");
+        const action = formData.get("wasteAction");
         const items = formData.get("items");
         const notes = formData.get("notes");
 
@@ -86,7 +84,7 @@ function InputLog() {
         if (!date) newErrors.date = "Date is required.";
         if (!tagType.length) newErrors.tagType = "Please select a type of waste.";
         if (!amount) newErrors.amount = "Please select an amount.";
-        if (action.length === 0) newErrors.action = "Please select an action.";
+        if (!action) newErrors.action = "Please select an action.";
         if (!items) newErrors.items = "This field is required.";
 
         if (Object.keys(newErrors).length > 0) {
@@ -180,11 +178,11 @@ function InputLog() {
                     </div>
 
                     <div className="form-group">
-                        <CheckboxGroup
-                            title="What did you do with it?"
+                        <SelectDropdown
+                            label="What did you do with it?"
                             name="wasteAction"
                             options={wasteActionOptions}
-                            defaultValue={entry.action || []}
+                            defaultValue={entry.action}
                             className={errors.action ? 'error' : ''}
                         />
                         {errors.action && <p className="error-text">{errors.action}</p>}

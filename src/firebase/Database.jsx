@@ -6,9 +6,6 @@ import { db } from '../index.jsx';
 const POINTS_MULTIPLIERS = {
   recycled: 2.0,
   composted: 2.5,
-  reused: 2.0,
-  repurposed: 2.0,
-  other: 0.5,
   landfill: 0.5
 };
 
@@ -22,18 +19,16 @@ const AMOUNT_MULTIPLIERS = {
 // Calculate points for an entry
 export function calculatePoints(entry) {
   const { action, amount } = entry;
-  let totalPoints = 0;
   
+  // If no action or amount, return 0 points
+  if (!action || !amount) return 0;
+  
+  const basePoints = 10; // Base points per action
   const amountMultiplier = AMOUNT_MULTIPLIERS[amount] || 1;
+  const actionMultiplier = POINTS_MULTIPLIERS[action] || 0.5;
   
-  // Calculate points for each action
-  action.forEach(actionType => {
-    const basePoints = 10; // Base points per action
-    const actionMultiplier = POINTS_MULTIPLIERS[actionType] || 0.5;
-    totalPoints += basePoints * actionMultiplier * amountMultiplier;
-  });
-  
-  return Math.round(totalPoints);
+  const points = basePoints * actionMultiplier * amountMultiplier;
+  return Math.round(points);
 }
 
 // Save a new log entry
@@ -72,6 +67,8 @@ export async function updateLog(logId, entry) {
     }
 
     const points = calculatePoints(entry);
+    console.log('New entry points:', points);
+    
     const entryWithPoints = {
       ...entry,
       points,
@@ -81,12 +78,15 @@ export async function updateLog(logId, entry) {
     // Get the old entry to calculate point difference
     const oldEntrySnapshot = await get(ref(db, `logs/${logId}`));
     const oldPoints = oldEntrySnapshot.exists() ? oldEntrySnapshot.val().points : 0;
+    console.log('Old entry points:', oldPoints);
     
     const logRef = ref(db, `logs/${logId}`);
     await set(logRef, entryWithPoints);
     
     // Update user points with the difference
     const pointsDifference = points - oldPoints;
+    console.log('Points difference:', pointsDifference);
+    
     await updateUserPoints(entry.userId, pointsDifference);
     
     return { success: true };
@@ -353,18 +353,23 @@ export async function getAnalyticsData(userId) {
     const wasteComposition = {
       recycled: 0,
       composted: 0,
-      reused: 0,
-      repurposed: 0,
-      other: 0
+      landfill: 0
     };
     
+    // First count occurrences
     logs.forEach(log => {
-      log.action.forEach(action => {
-        if (wasteComposition.hasOwnProperty(action)) {
-          wasteComposition[action]++;
-        }
-      });
+      if (wasteComposition.hasOwnProperty(log.action)) {
+        wasteComposition[log.action]++;
+      }
     });
+
+    // Convert counts to percentages
+    const totalActions = Object.values(wasteComposition).reduce((sum, count) => sum + count, 0);
+    if (totalActions > 0) {
+      Object.keys(wasteComposition).forEach(key => {
+        wasteComposition[key] = Math.round((wasteComposition[key] / totalActions) * 100);
+      });
+    }
     
     // Calculate points progress over the last 7 days
     const today = new Date();
@@ -406,7 +411,7 @@ export async function getAnalyticsData(userId) {
     return {
       totalPoints: 0,
       rank: 'Unranked',
-      wasteComposition: { recycled: 0, composted: 0, reused: 0, repurposed: 0, other: 0 },
+      wasteComposition: { recycled: 0, composted: 0, landfill: 0 },
       pointsProgress: { labels: [], data: [] }
     };
   }

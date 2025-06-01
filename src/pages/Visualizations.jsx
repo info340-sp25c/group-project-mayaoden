@@ -14,9 +14,7 @@ function Visualizations() {
         wasteComposition: {
             recycled: 0,
             composted: 0,
-            reused: 0,
-            repurposed: 0,
-            other: 0
+            landfill: 0
         },
         pointsProgress: {
             labels: [],
@@ -95,9 +93,7 @@ function Visualizations() {
                         rank={wasteData.rank}
                         recycled={wasteData.wasteComposition.recycled}
                         composted={wasteData.wasteComposition.composted}
-                        reused={wasteData.wasteComposition.reused}
-                        repurposed={wasteData.wasteComposition.repurposed}
-                        landfill={wasteData.wasteComposition.other} 
+                        landfill={wasteData.wasteComposition.landfill}
                     />
                 </section>
 
@@ -135,9 +131,7 @@ function Visualizations() {
                             <PieChartComponent 
                                 recycled={wasteData.wasteComposition.recycled}
                                 composted={wasteData.wasteComposition.composted}
-                                reused={wasteData.wasteComposition.reused}
-                                repurposed={wasteData.wasteComposition.repurposed}
-                                other={wasteData.wasteComposition.other}
+                                landfill={wasteData.wasteComposition.landfill}
                             />
                         </div>
                         
@@ -178,13 +172,7 @@ function Visualizations() {
                                 <strong>Recycling:</strong> 2.0x points
                             </div>
                             <div>
-                                <strong>Reusing:</strong> 2.0x points  
-                            </div>
-                            <div>
-                                <strong>Repurposing:</strong> 2.0x points
-                            </div>
-                            <div>
-                                <strong>Other/Landfill:</strong> 0.5x points
+                                <strong>Landfill:</strong> 0.5x points
                             </div>
                         </div>
                         <p style={{ fontSize: '0.9rem', marginTop: '1rem', marginBottom: 0 }}>
