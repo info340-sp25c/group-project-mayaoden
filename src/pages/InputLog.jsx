@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import CheckboxGroup from '../components/CheckboxGroup';
@@ -101,7 +100,6 @@ function InputLog() {
         setIsSubmitting(true);
 
         const newEntry = {
-            id: entry.id || uuidv4(),
             userId: currentUser.uid,
             date,
             tagType,
@@ -182,7 +180,7 @@ function InputLog() {
                             label="What did you do with it?"
                             name="wasteAction"
                             options={wasteActionOptions}
-                            defaultValue={entry.action}
+                            defaultValue={Array.isArray(entry.action) ? entry.action[0] : entry.action}
                             className={errors.action ? 'error' : ''}
                         />
                         {errors.action && <p className="error-text">{errors.action}</p>}

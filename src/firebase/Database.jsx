@@ -39,11 +39,16 @@ export async function saveLog(entry) {
     }
 
     const points = calculatePoints(entry);
+    console.log('New entry points:', points);
+    
     const entryWithPoints = {
       ...entry,
       points,
       createdAt: Date.now()
     };
+    
+    // Remove any existing id to let Firebase generate one
+    delete entryWithPoints.id;
     
     const logsRef = ref(db, 'logs');
     const newLogRef = push(logsRef);
@@ -75,9 +80,16 @@ export async function updateLog(logId, entry) {
       updatedAt: Date.now()
     };
     
+    // Remove any duplicate id fields
+    delete entryWithPoints.id;
+    
     // Get the old entry to calculate point difference
     const oldEntrySnapshot = await get(ref(db, `logs/${logId}`));
-    const oldPoints = oldEntrySnapshot.exists() ? oldEntrySnapshot.val().points : 0;
+    if (!oldEntrySnapshot.exists()) {
+      throw new Error('Entry not found');
+    }
+    
+    const oldPoints = oldEntrySnapshot.val().points || 0;
     console.log('Old entry points:', oldPoints);
     
     const logRef = ref(db, `logs/${logId}`);
@@ -158,16 +170,31 @@ export function listenToLogs(callback, userId) {
   const unsubscribe = onValue(logsRef, (snapshot) => {
     if (snapshot.exists()) {
       const logs = [];
+      const seenIds = new Set(); // Track seen IDs to prevent duplicates
+      
       snapshot.forEach((childSnapshot) => {
         const log = childSnapshot.val();
-        if (log.userId === userId) {
+        const id = childSnapshot.key;
+        
+        if (log.userId === userId && !seenIds.has(id)) {
+          seenIds.add(id);
           logs.push({
-            id: childSnapshot.key,
-            ...log
+            ...log,
+            id
           });
         }
       });
-      callback(logs.sort((a, b) => new Date(b.date) - new Date(a.date)));
+      
+      // Sort by date and timestamp for consistent ordering
+      const sortedLogs = logs.sort((a, b) => {
+        const dateCompare = new Date(b.date) - new Date(a.date);
+        if (dateCompare === 0) {
+          return (b.timestamp || 0) - (a.timestamp || 0);
+        }
+        return dateCompare;
+      });
+      
+      callback(sortedLogs);
     } else {
       callback([]);
     }
@@ -379,6 +406,7 @@ export async function getAnalyticsData(userId) {
       data: []
     };
     
+    // Get dates for last 7 days
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
@@ -387,12 +415,18 @@ export async function getAnalyticsData(userId) {
       pointsProgress.labels.push(`Day ${7 - i}`);
     }
     
-    let cumulativePoints = 0;
+    // Calculate base points (total points minus points from last 7 days)
+    const last7DaysLogs = logs.filter(log => last7Days.includes(log.date));
+    const last7DaysPoints = last7DaysLogs.reduce((sum, log) => sum + (log.points || 0), 0);
+    let basePoints = (userData.points || 0) - last7DaysPoints;
+    
+    // Calculate points progression
+    let runningTotal = basePoints;
     last7Days.forEach(dateStr => {
       const dayLogs = logs.filter(log => log.date === dateStr);
       const dayPoints = dayLogs.reduce((sum, log) => sum + (log.points || 0), 0);
-      cumulativePoints += dayPoints;
-      pointsProgress.data.push(cumulativePoints);
+      runningTotal += dayPoints;
+      pointsProgress.data.push(runningTotal);
     });
     
     // Get user rank

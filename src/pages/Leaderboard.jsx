@@ -45,19 +45,34 @@ function Leaderboard() {
         let sortedData = [...leaderboardData];
         
         if (sortBy === "points") {
+            // Sort by points first
             sortedData.sort((a, b) => b.points - a.points);
+            // Assign ranks and classes based on points order
+            sortedData = sortedData.map((item, index) => ({
+                ...item,
+                rank: index + 1,
+                className: index === 0 ? "gold" : index === 1 ? "silver" : index === 2 ? "bronze" : ""
+            }));
         } else if (sortBy === "name") {
+            // Get the points-based ranks first
+            const pointsRanks = [...leaderboardData]
+                .sort((a, b) => b.points - a.points)
+                .reduce((acc, item, index) => {
+                    acc[item.id] = {
+                        rank: index + 1,
+                        className: index === 0 ? "gold" : index === 1 ? "silver" : index === 2 ? "bronze" : ""
+                    };
+                    return acc;
+                }, {});
+            
+            // Sort by name but keep points-based ranks
             sortedData.sort((a, b) => a.user.localeCompare(b.user));
+            sortedData = sortedData.map(item => ({
+                ...item,
+                rank: pointsRanks[item.id].rank,
+                className: pointsRanks[item.id].className
+            }));
         }
-        
-        // Reassign ranks and classes based on new order
-        sortedData = sortedData.map((item, index) => ({
-            ...item,
-            rank: sortBy === "points" ? (leaderboardData.find(user => user.id === item.id)?.rank || index + 1) : index + 1,
-            className: sortBy === "points" ? 
-                (index === 0 ? "gold" : index === 1 ? "silver" : index === 2 ? "bronze" : "") :
-                (leaderboardData.find(user => user.id === item.id)?.className || "")
-        }));
         
         setLeaderboardData(sortedData);
         setSortOrder(sortBy);
