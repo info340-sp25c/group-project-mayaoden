@@ -11,6 +11,8 @@ import {
 } from 'firebase/auth';
 import { auth } from '../index.jsx';
 import { getUserData, updateUserProfile } from '../firebase/Database';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../index.jsx';
 
 const AuthContext = createContext();
 
@@ -28,14 +30,29 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
+    let userListener = null;
+    
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       
+      // Clean up previous listener if exists
+      if (userListener) {
+        userListener();
+      }
+      
       if (user) {
-        // Load or create user data in database
+        // Initial load of user data
         try {
           const dbUserData = await getUserData(user.uid);
           setUserData(dbUserData);
+          
+          // Set up real-time listener for user data
+          const userRef = ref(db, `users/${user.uid}`);
+          userListener = onValue(userRef, (snapshot) => {
+            if (snapshot.exists()) {
+              setUserData(snapshot.val());
+            }
+          });
         } catch (error) {
           console.error('Error loading user data:', error);
         }
@@ -46,7 +63,13 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    return unsubscribe;
+    // Return cleanup function that removes both listeners
+    return () => {
+      if (userListener) {
+        userListener();
+      }
+      unsubscribe();
+    };
   }, []);
 
   const signUp = async (email, password, displayName) => {
