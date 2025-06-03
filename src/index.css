@@ -264,88 +264,12 @@ nav ul li a:hover {
     cursor: pointer;
     color: white;
 }
-  
-  /* Mobile view */
-@media (max-width: 700px) {
-    .hamburger {
-      display: inline;
-    }
-  
-    nav ul {
-        display: none;
-        flex-direction: column;
-        background-color: #eefdf0;
-        position: absolute;
-        top: 60px; /* height of navbar */
-        right: 20px;
-        padding: 10px 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        min-width: 150px;
-        max-width: 80vw;
-    }
-
-    nav ul.active {
-        display: flex;
-    }
-
-    nav ul li {
-        padding: 0.75rem 0;
-        text-align: right;
-        border-top: 1px solid #ccc;
-    }
-
-    nav ul li:first-child {
-        border-top: none;
-    }
-
-    nav ul li a {
-        text-decoration: none;
-        color: #004c3f;
-        font-weight: bold;
-        font-size: 16px;
-        transition: color 0.3s ease;
-    }
-
-    nav ul li a:hover {
-        color: #002f5f;
-    }
-}
-
-@media (min-width: 701px) {
-    nav ul {
-        display: flex;
-        position: static;
-        flex-direction: row;
-        background-color: transparent;
-        box-shadow: none;
-        padding: 0;
-        max-width: none;
-    }
-
-    nav ul li {
-        padding: 0;
-        border-top: none;
-    }
-
-    .hamburger {
-        display: none;
-    }
-}
 
 .stats-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     gap: 1rem;
     margin-bottom: 2rem;
-  }
-  
-  @media (max-width: 600px) {
-    .stats-wrapper {
-      grid-template-columns: 1fr; 
-      row-gap: 2rem;
-    }
   }
 
 .features {
@@ -625,16 +549,7 @@ nav ul li a:hover {
     transform: translateY(0);
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .add-user div {
-        flex-direction: column;
-    }
-    
-    .sort-buttons {
-        flex-wrap: wrap;
-    }
-}
+
 
 .form-group {
   margin-bottom: 2rem;
@@ -704,4 +619,90 @@ textarea.error {
     text-align: center;
     min-height: 20vh;
 
+}
+
+  /* Mobile view */
+@media (max-width: 700px) {
+    .hamburger {
+      display: inline;
+    }
+  
+    nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: #eefdf0;
+        position: absolute;
+        top: 60px; /* height of navbar */
+        right: 20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        min-width: 150px;
+        max-width: 80vw;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        padding: 0.75rem 0;
+        text-align: right;
+        border-top: 1px solid #ccc;
+    }
+
+    nav ul li:first-child {
+        border-top: none;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #004c3f;
+        font-weight: bold;
+        font-size: 16px;
+        transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #002f5f;
+    }
+}
+
+@media (min-width: 701px) {
+    nav ul {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        max-width: none;
+    }
+
+    nav ul li {
+        padding: 0;
+        border-top: none;
+    }
+
+    .hamburger {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+.stats-wrapper {
+    grid-template-columns: 1fr; 
+    row-gap: 2rem;
+}
+}
+
+@media (max-width: 600px) {
+    .add-user div {
+        flex-direction: column;
+    }
+    
+    .sort-buttons {
+        flex-wrap: wrap;
+    }
 }
