@@ -286,7 +286,7 @@ nav ul li a:hover {
         max-width: 80vw;
     }
 
-    nav ul.show {
+    nav ul.active {
         display: flex;
     }
 
